@@ -1,0 +1,662 @@
+<title>Chahak Toy Library</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap">
+<style>
+/* Layout: a clean, photo-led single page. White and sky-tint sections with crisp edges; the logo's rainbow colours used as solid accents (stripe, labels, card tops), real photos of the library carry the warmth. Single light theme by choice. */
+:root{
+  color-scheme:light;
+  --bg:#ffffff; --tint:#f2f7fe; --ink:#16192f; --muted:#555b74; --line:#e2e6ef;
+  --blue:#1764d1; --blue-dark:#0f4ea8; --sky:#d9e9ff;
+  --red:#e8372f; --orange:#f58a07; --yellow:#f9bf1a; --green:#1f9d47; --purple:#7343d8; --pink:#e23a82; --teal:#0d9488;
+  --head:"Poppins","Noto Sans Devanagari",system-ui,sans-serif;
+  --body:"Noto Sans","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:14px;
+  --shadow:0 1px 2px rgba(22,25,47,.06),0 8px 24px rgba(22,25,47,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;overflow-x:hidden}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--head);margin:0;text-wrap:balance;letter-spacing:-.015em}
+h1{font-size:clamp(38px,5.2vw,60px);line-height:1.08;font-weight:700}
+h2{font-size:clamp(28px,3.6vw,40px);line-height:1.15;font-weight:700}
+h3{font-size:19px;line-height:1.3;font-weight:600}
+html[lang="hi"] h1,html[lang="hi"] h2,html[lang="hi"] h3{letter-spacing:0;line-height:1.35}
+p{margin:0}
+a{color:inherit}
+img,video{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+section{padding-block:88px}
+.tint{background:var(--tint)}
+.head{display:grid;gap:12px;max-width:640px;margin-bottom:44px}
+.head p{color:var(--muted);font-size:18px}
+.label{display:inline-flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+html[lang="hi"] .label{letter-spacing:.02em;font-size:15px}
+.label::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c,var(--blue))}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--head);font-weight:600;font-size:16px;line-height:1;padding:15px 24px;border-radius:10px;border:0;text-decoration:none;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 6px 16px rgba(23,100,209,.28)}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-line{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-line:hover{background:var(--ink);color:#fff}
+
+/* reveal: only for content below the first screen */
+.reveal{transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+.reveal.pre{opacity:0;transform:translateY(24px)}
+
+/* header */
+.rainbow{height:5px;background:linear-gradient(90deg,var(--red) 0 14.3%,var(--orange) 0 28.6%,var(--yellow) 0 42.9%,var(--green) 0 57.2%,var(--blue) 0 71.5%,var(--purple) 0 85.8%,var(--pink) 0)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#fff}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:20px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none}
+.brand img{width:50px;height:50px;border-radius:50%;box-shadow:0 0 0 1px var(--line)}
+.brand b{display:block;font-family:var(--head);font-weight:700;font-size:18px;line-height:1.1}
+.brand small{display:block;font-size:13px;color:var(--muted);line-height:1.3}
+.links{display:flex;gap:2px;list-style:none;margin:0 0 0 auto;padding:0}
+.links a{display:block;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:500;font-size:15.5px;color:var(--muted);transition:color .2s,background .2s}
+.links a:hover{color:var(--ink);background:var(--tint)}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:3px;flex:none}
+.lang button{font:500 14px/1 var(--body);border:0;background:transparent;color:var(--muted);padding:8px 11px;border-radius:7px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.nav .btn{padding:12px 18px;font-size:15px}
+.menu-btn{display:none;border:1px solid var(--line);background:#fff;border-radius:10px;width:44px;height:44px;cursor:pointer;place-items:center;flex:none}
+.mobile-menu{display:none}
+@media (max-width:1080px){
+  .links,.nav .btn{display:none}
+  .lang{margin-left:auto}
+  .menu-btn{display:grid}
+  .mobile-menu:not([hidden]){display:grid;gap:2px;padding-block:6px 14px}
+  .mobile-menu a{padding:11px 12px;border-radius:8px;text-decoration:none;font-weight:500;font-size:17px}
+  .mobile-menu a:hover{background:var(--tint)}
+}
+@media (max-width:520px){.nav{gap:10px}.brand{min-width:0;gap:9px}.brand img{width:42px;height:42px}.brand small{display:none}.brand b{font-size:15px}.lang button{padding:7px 8px;font-size:13px}.menu-btn{width:40px;height:40px}}
+
+/* hero */
+.hero{padding-block:56px 72px}
+.hero-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+.hero-copy{display:grid;gap:22px;min-width:0}
+.hero h1 .hl{color:var(--blue)}
+.lede{font-size:19px;color:var(--muted);max-width:33em}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.status{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--muted);flex:none}
+.dot.open{background:var(--green);box-shadow:0 0 0 0 rgba(31,157,71,.5);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(31,157,71,0)}100%{box-shadow:0 0 0 0 rgba(31,157,71,0)}}
+.hero-media{position:relative;min-width:0}
+.hero-photo{border-radius:18px;overflow:hidden;aspect-ratio:4/3;box-shadow:var(--shadow)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.07) translateX(-1.5%)}}
+.hero-logo{position:absolute;left:-28px;bottom:-28px;width:132px;height:132px;border-radius:50%;background:#fff;padding:5px;box-shadow:0 10px 30px rgba(22,25,47,.18)}
+.hero-logo img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.hero-tag{position:absolute;right:16px;top:16px;background:#fff;border-radius:10px;padding:8px 14px;font-size:14px;font-weight:600;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px}
+.hero-tag i{width:8px;height:8px;border-radius:50%;background:var(--red)}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:44px}.hero-logo{left:12px;bottom:-24px;width:100px;height:100px}}
+
+/* stats band */
+.stats{background:var(--blue);color:#fff}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:28px 24px;display:grid;gap:2px;border-left:1px solid rgba(255,255,255,.18)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat b{font-family:var(--head);font-weight:700;font-size:30px;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat>span{font-size:15px;opacity:.85}
+@media (max-width:820px){.stats .wrap{grid-template-columns:1fr 1fr}.stat{padding:20px 16px}.stat:nth-child(3){border-left:0;padding-left:0}.stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.18)}}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.about-photo{border-radius:18px;overflow:hidden;aspect-ratio:4/5;box-shadow:var(--shadow)}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.about-copy{display:grid;gap:18px;min-width:0}
+.about-copy>p{color:var(--muted);font-size:18px}
+.points{display:grid;gap:14px;margin-top:8px}
+.point{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;padding:18px;border:1px solid var(--line);border-radius:var(--r);background:#fff}
+.point .ic{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:var(--c)}
+.point p{color:var(--muted);font-size:16px;margin-top:2px}
+@media (max-width:900px){.about-grid{grid-template-columns:1fr;gap:40px}.about-photo{aspect-ratio:4/3}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;align-content:start;border-top:4px solid var(--c)}
+.steps li::before{counter-increment:s;content:"0" counter(s);font-family:var(--head);font-weight:700;font-size:15px;color:var(--c)}
+.steps p{color:var(--muted);font-size:16px}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* toys */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;grid-template-columns:52px 1fr;gap:6px 16px;align-content:start;transition:transform .25s,box-shadow .25s,border-color .25s}
+.cat:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
+.cat .ic{grid-row:span 2;width:52px;height:52px;border-radius:12px;background:var(--c);display:grid;place-items:center}
+.cat:hover .ic svg{animation:nudge .5s ease}
+@keyframes nudge{30%{transform:rotate(-10deg)}60%{transform:rotate(7deg)}}
+.cat p{color:var(--muted);font-size:15.5px;line-height:1.55}
+@media (max-width:960px){.cats{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.cats{grid-template-columns:1fr}}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:14px;grid-template-areas:"v r r b" "v r r b" "v w w b" "a w w p" "a c c p"}
+.gal>*{border-radius:var(--r);overflow:hidden;position:relative;min-width:0}
+.gal img,.gal video{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.gal button{all:unset;cursor:zoom-in;display:block;width:100%;height:100%}
+.gal button:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+.gal>*:hover img{transform:scale(1.05)}
+.g-v{grid-area:v}.g-r{grid-area:r}.g-b{grid-area:b}.g-w{grid-area:w}.g-a{grid-area:a}.g-p{grid-area:p}
+.g-c{grid-area:c;background:var(--ink);color:#fff;padding:24px 26px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.g-c h3{font-size:21px}
+.g-c a{color:var(--yellow);font-weight:600;text-decoration:none}
+.g-c a:hover{text-decoration:underline}
+.vtag{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:600;padding:5px 10px;border-radius:8px;display:flex;align-items:center;gap:6px}
+.vtag i{width:7px;height:7px;border-radius:50%;background:var(--red)}
+@media (max-width:860px){
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:170px;grid-template-areas:"v r" "v b" "v b" "w w" "w w" "a p" "a p" "c c"}
+}
+.lightbox{position:fixed;inset:0;background:rgba(10,12,24,.92);z-index:90;display:grid;place-items:center;padding:max(20px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+.lightbox[hidden]{display:none}
+.lightbox img{max-height:86vh;max-width:min(1100px,100%);border-radius:10px;object-fit:contain}
+.lightbox button{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:22px;cursor:pointer}
+
+/* involved */
+.inv{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{border-radius:16px;padding:30px;display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);background:#fff;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.card .ic{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;background:var(--c)}
+.card p,.card li{color:var(--muted)}
+.card ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.card .btn{margin-top:auto;align-self:flex-start}
+.card.solid{background:var(--c);border-color:transparent;color:#fff}
+.card.solid p{color:rgba(255,255,255,.92)}
+.card.solid .ic{background:rgba(255,255,255,.2)}
+.card.solid .btn{background:#fff;color:var(--ink)}
+.card h3{font-size:22px}
+.card .tag{align-self:flex-start;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.22);padding:4px 10px;border-radius:6px}
+@media (max-width:760px){.inv{grid-template-columns:1fr}}
+
+/* founders */
+.founders{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.founder{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:26px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.avatar{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-family:var(--head);font-weight:700;font-size:28px;color:#fff;background:var(--c)}
+.founder b{display:block;font-family:var(--head);font-size:21px;line-height:1.25}
+.founder span{color:var(--muted);font-size:15.5px}
+.story{margin-top:22px;max-width:760px;color:var(--muted);font-size:18px}
+@media (max-width:760px){.founders{grid-template-columns:1fr}}
+
+/* news */
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.post{border:1px solid var(--line);border-radius:var(--r);padding:24px;background:#fff;display:grid;gap:10px;align-content:start}
+.post time{font-family:var(--head);font-weight:600;font-size:13.5px;color:var(--c)}
+.post p{color:var(--muted);font-size:16px}
+.insta{margin-top:18px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:22px 26px;border-radius:var(--r);border:1px solid var(--line);background:#fff}
+.insta div{display:flex;align-items:center;gap:14px}
+.insta .ig{width:48px;height:48px;border-radius:12px;background:linear-gradient(45deg,#f9bf1a,#e8372f 45%,#e23a82 65%,#7343d8);display:grid;place-items:center;flex:none}
+.insta small{display:block;color:var(--muted);font-size:15px}
+@media (max-width:860px){.news{grid-template-columns:1fr}}
+
+/* visit */
+.visit-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:18px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;display:grid;gap:22px;align-content:start;min-width:0}
+.sub{font-family:var(--head);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+html[lang="hi"] .sub{letter-spacing:0;font-size:14.5px}
+.addr strong{display:block;font-family:var(--head);font-size:20px;font-weight:600}
+.addr span{color:var(--muted)}
+.hours{display:grid;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.hours div{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;font-variant-numeric:tabular-nums}
+.hours div+div{border-top:1px solid var(--line)}
+.hours .off{color:var(--red);background:#fff6f5}
+.wa{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:12px;transition:border-color .2s}
+.wa:hover{border-color:#25d366}
+.wa.main{border:1.5px solid #25d366;background:#f3fcf6}
+.wa .w{width:44px;height:44px;border-radius:50%;background:#25d366;display:grid;place-items:center}
+.wa .who{min-width:0}
+.wa .who b{display:block;font-family:var(--head);font-weight:600;font-size:17px;line-height:1.3}
+.wa .who small{display:block;color:var(--muted);font-size:14px;line-height:1.45}
+.wa .num{font-variant-numeric:tabular-nums;font-weight:500;user-select:all}
+.acts{display:flex;gap:6px}
+.chip{font:600 13.5px/1 var(--body);padding:9px 12px;border-radius:8px;border:0;cursor:pointer;text-decoration:none;white-space:nowrap}
+.chip.go{background:#25d366;color:#08321a}
+.chip.cp{background:var(--tint);color:var(--ink)}
+.wa-list{display:grid;gap:10px}
+@media (max-width:900px){.visit-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.wa{grid-template-columns:44px 1fr}.acts{grid-column:1/-1}}
+
+/* faq */
+.faq{max-width:820px;display:grid;gap:10px}
+details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 20px}
+details[open]{border-color:var(--ink)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:17px;font-family:var(--head);font-weight:600;font-size:17px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:12px;height:12px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg) translate(-3px,-3px);transition:transform .25s}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{color:var(--muted);padding-bottom:18px;max-width:66ch}
+
+/* footer */
+footer{background:var(--ink);color:#d7daea;padding-block:64px 32px}
+.foot{display:grid;grid-template-columns:1fr 1.4fr .8fr;gap:44px}
+.foot .brand b{color:#fff}
+.foot .brand small{color:#a9aecb}
+.foot p{font-size:15.5px;line-height:1.7}
+.foot h3{color:#fff;font-size:16px;margin-bottom:12px}
+.foot a{color:var(--yellow)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot ul a{color:#d7daea;text-decoration:none;font-size:15.5px}
+.foot ul a:hover{color:#fff;text-decoration:underline}
+.legal{margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:14px;color:#a9aecb}
+@media (max-width:860px){.foot{grid-template-columns:1fr;gap:32px}}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;font-weight:500;z-index:80;visibility:hidden;transition:transform .3s,visibility .3s}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal.pre{opacity:1;transform:none}
+}
+</style>
+
+<div class="rainbow" aria-hidden="true"></div>
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Chahak Toy Library, home">
+      <img src="logo-sm.webp" alt="" width="160" height="160">
+      <span><b data-i18n="brand">Chahak Toy Library</b><small data-i18n="brandSub">चहक खिलौना लाइब्रेरी · Sri Ganganagar</small></span>
+    </a>
+    <ul class="links">
+      <li><a href="#about" data-i18n="nAbout">About</a></li>
+      <li><a href="#toys" data-i18n="nToys">Toys</a></li>
+      <li><a href="#gallery" data-i18n="nGallery">Gallery</a></li>
+      <li><a href="#involved" data-i18n="nInvolved">Get involved</a></li>
+      <li><a href="#founders" data-i18n="nFounders">Founders</a></li>
+      <li><a href="#visit" data-i18n="nContact">Contact</a></li>
+    </ul>
+    <div class="lang" role="group" aria-label="Language">
+      <button id="lang-en" type="button" aria-pressed="true">EN</button>
+      <button id="lang-hi" type="button" aria-pressed="false">हिंदी</button>
+    </div>
+    <a class="btn btn-primary" href="#involved" data-i18n="nDonate">Donate toys</a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="#16192f" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="wrap mobile-menu" id="mobile-menu" hidden>
+    <a href="#about" data-i18n="nAbout">About</a>
+    <a href="#toys" data-i18n="nToys">Toys</a>
+    <a href="#gallery" data-i18n="nGallery">Gallery</a>
+    <a href="#involved" data-i18n="nInvolved">Get involved</a>
+    <a href="#founders" data-i18n="nFounders">Founders</a>
+    <a href="#news" data-i18n="nNews">News</a>
+    <a href="#visit" data-i18n="nContact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="label" style="--c:var(--red)" data-i18n="hLabel">Free toy library · Jawahar Nagar, Sri Ganganagar</span>
+        <h1 data-i18n="hTitle">Every child has the right to <span class="hl">play.</span></h1>
+        <p class="lede" data-i18n="hLede">Chahak is a toy library where toys that families no longer use find new homes. Children come in to play with hundreds of ride-ons, games, puzzles, dolls and soft toys, free of charge.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#visit" data-i18n="hVisit">Plan a visit</a>
+          <a class="btn btn-line" href="#involved" data-i18n="hDonate">Donate your old toys</a>
+        </div>
+        <div class="status"><span class="dot" id="dot"></span><span id="open-status">Open Tuesday to Sunday, 10 am – 5 pm</span></div>
+      </div>
+      <div class="hero-media">
+        <div class="hero-photo"><img src="room.webp" alt="Inside Chahak Toy Library: white shelves full of toys against a sky-blue cloud wallpaper, with a ball pit and play corner" width="1280" height="960"></div>
+        <div class="hero-logo"><img src="logo.webp" alt="Chahak Toy Library logo" width="760" height="760"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="wrap">
+      <div class="stat"><b><span id="count">12,000</span>+</b><span data-i18n="st1">toys given to children</span></div>
+      <div class="stat"><b data-i18n="st2b">Free</b><span data-i18n="st2">for children in need</span></div>
+      <div class="stat"><b data-i18n="st3b">All ages</b><span data-i18n="st3">babies to teens</span></div>
+      <div class="stat"><b data-i18n="st4b">6 days</b><span data-i18n="st4">a week, 10 am – 5 pm</span></div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-photo reveal"><img src="shelves-a.webp" alt="Shelves at Chahak with ride-on toys on top, soft toys, board games and science kits" width="960" height="1280" loading="lazy"></div>
+      <div class="about-copy">
+        <span class="label reveal" style="--c:var(--orange)" data-i18n="aLabel">About Chahak</span>
+        <h2 class="reveal" data-i18n="aTitle">A toy one child has outgrown can be another child's favourite</h2>
+        <p class="reveal" data-i18n="aP">Chahak (चहक) means the happy chirping of birds. We collect toys that families no longer use, clean and sort them, and open them up to children who would not otherwise have them. Every child who walks in gets to play, learn and imagine.</p>
+        <div class="points">
+          <div class="point reveal" style="--c:#fde8e7"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z" fill="#e8372f"/></svg></span><div><h3 data-i18n="p1t">Free for children in need</h3><p data-i18n="p1p">Access to every toy and game is free for children from underprivileged families.</p></div></div>
+          <div class="point reveal" style="--c:#fff3d1;--d:.08s"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a7 7 0 0 1 4 12.7V18H8v-2.3A7 7 0 0 1 12 3zM9 21h6" stroke="#c98a00" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></span><div><h3 data-i18n="p2t">Learning through play</h3><p data-i18n="p2p">Science kits, puzzles and board games build curiosity, patience and problem-solving.</p></div></div>
+          <div class="point reveal" style="--c:#e1f4e7;--d:.16s"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4" stroke="#1f9d47" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3 data-i18n="p3t">A second life for toys</h3><p data-i18n="p3p">Instead of gathering dust at home, toys keep moving from one child to the next.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint" id="how">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--green)" data-i18n="howLabel">How it works</span><h2 data-i18n="howTitle">From a donor's cupboard to a child's hands</h2></div>
+      <ol class="steps">
+        <li class="reveal" style="--c:var(--red)"><h3 data-i18n="s1t">Families donate</h3><p data-i18n="s1p">People across Sri Ganganagar bring in toys their children no longer use.</p></li>
+        <li class="reveal" style="--c:var(--orange);--d:.08s"><h3 data-i18n="s2t">We clean and sort</h3><p data-i18n="s2p">Every toy is checked, cleaned and placed on the shelves by type.</p></li>
+        <li class="reveal" style="--c:var(--green);--d:.16s"><h3 data-i18n="s3t">Children come to play</h3><p data-i18n="s3p">Kids visit the library in Jawahar Nagar and play with whatever they love.</p></li>
+        <li class="reveal" style="--c:var(--blue);--d:.24s"><h3 data-i18n="s4t">The joy keeps moving</h3><p data-i18n="s4p">Toys are shared from child to child, so nothing sits unused.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="toys">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--purple)" data-i18n="tLabel">On our shelves</span><h2 data-i18n="tTitle">Something for every kind of play</h2><p data-i18n="tP">A look at what children can find at Chahak. New toys arrive all the time through donations.</p></div>
+      <div class="cats" id="cats"></div>
+    </div>
+  </section>
+
+  <section class="tint" id="gallery">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--blue)" data-i18n="gLabel">Gallery</span><h2 data-i18n="gTitle">Step inside Chahak</h2><p data-i18n="gP">Sky-blue walls, shelves full of toys, a ball pit, a slide and a swing. Tap any photo to see it larger.</p></div>
+      <div class="gal">
+        <div class="g-v reveal"><video src="inside.mp4" poster="inside-poster.webp" autoplay muted loop playsinline preload="metadata" aria-label="Short video walking through the library"></video><span class="vtag"><i></i><span data-i18n="vtag">Walkthrough</span></span></div>
+        <div class="g-r reveal" style="--d:.06s"><button type="button" data-full="room.webp" aria-label="View larger"><img src="room.webp" alt="The main room with shelves on both sides, a play corner and blue balloons" loading="lazy"></button></div>
+        <div class="g-b reveal" style="--d:.12s"><button type="button" data-full="shelves-b.webp" aria-label="View larger"><img src="shelves-b.webp" alt="Shelves of board games and soft toys, with a baby walker and swing nearby" loading="lazy"></button></div>
+        <div class="g-w reveal"><button type="button" data-full="wall.webp" aria-label="View larger"><img src="wall.webp" alt="A full wall of shelves with ride-on toys on top and toys sorted below" loading="lazy"></button></div>
+        <div class="g-a reveal" style="--d:.06s"><button type="button" data-full="swing-corner.webp" aria-label="View larger"><img src="swing-corner.webp" alt="The swing and play kitchen corner" loading="lazy"></button></div>
+        <div class="g-p reveal" style="--d:.12s"><button type="button" data-full="play-corner.webp" aria-label="View larger"><img src="play-corner.webp" alt="Ball pit with a slide, skateboards, a mini pool table and karaoke stand" loading="lazy"></button></div>
+        <div class="g-c reveal" style="--d:.18s"><h3 data-i18n="gcT">More photos on Instagram</h3><a href="https://www.instagram.com/chahaktoylibrary/" target="_blank" rel="noopener">@chahaktoylibrary →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="involved">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--pink)" data-i18n="iLabel">Get involved</span><h2 data-i18n="iTitle">Ways to help a child play</h2><p data-i18n="iP">Chahak grows with every toy, every celebration and every helping hand.</p></div>
+      <div class="inv">
+        <div class="card solid reveal" style="--c:var(--green)">
+          <span class="ic"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="3" y="10" width="20" height="13" rx="2" fill="#fff"/><rect x="2" y="6" width="22" height="5" rx="1.5" fill="#fff" opacity=".8"/><path d="M13 6v17" stroke="#1f9d47" stroke-width="2.4"/><path d="M13 6c-2-4-7-4-6-1 .5 1.4 3.5 1.4 6 1zM13 6c2-4 7-4 6-1-.5 1.4-3.5 1.4-6 1z" fill="#fff"/></svg></span>
+          <h3 data-i18n="i1t">Donate your old toys</h3>
+          <p data-i18n="i1p">Toys in good condition, and board games and puzzles with all their pieces. Your old toys can become another child's greatest happiness.</p>
+          <a class="btn" href="#visit" data-i18n="i1b">Arrange a drop-off</a>
+        </div>
+        <div class="card solid reveal" style="--c:var(--pink);--d:.08s">
+          <span class="tag" data-i18n="newTag">New</span>
+          <span class="ic"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="3" y="13" width="20" height="10" rx="2" fill="#fff"/><path d="M3 17q2.5 2 5 0t5 0 5 0 5 0" stroke="#e23a82" stroke-width="1.8" fill="none"/><path d="M8 13V9M13 13V9M18 13V9" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path d="M8 6.5c0-1 .8-2 0-3-.8 1-.8 2 0 3zM13 6.5c0-1 .8-2 0-3-.8 1-.8 2 0 3zM18 6.5c0-1 .8-2 0-3-.8 1-.8 2 0 3z" fill="#fff" stroke="#fff" stroke-width="1.2"/></svg></span>
+          <h3 data-i18n="i2t">Celebrate a birthday at Chahak</h3>
+          <p data-i18n="i2p">Bring your child to celebrate their birthday with the children at the library. Share a treat, play together, and donate a toy to mark the day.</p>
+          <a class="btn" href="#visit" data-i18n="i2b">Book a celebration</a>
+        </div>
+        <div class="card reveal" style="--c:#efe8fd">
+          <span class="ic"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M10 3h6M11 3v6l-6 11a2 2 0 0 0 1.8 3h12.4A2 2 0 0 0 21 20l-6-11V3" stroke="#7343d8" stroke-width="2.2" fill="none" stroke-linejoin="round"/><path d="M7.5 16h11" stroke="#7343d8" stroke-width="2.2"/></svg></span>
+          <h3 data-i18n="i3t">Sponsor a toy set</h3>
+          <p data-i18n="i3p">Fund new educational kits and science toys for our growing collection.</p>
+          <a class="btn btn-line" href="#visit" data-i18n="i3b">Talk to us</a>
+        </div>
+        <div class="card reveal" style="--c:#fff1db;--d:.08s">
+          <span class="ic"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M7 4h12v19l-6-4-6 4z" stroke="#f58a07" stroke-width="2.2" fill="none" stroke-linejoin="round"/></svg></span>
+          <h3 data-i18n="i4t">Our wishlist</h3>
+          <ul>
+            <li data-i18n="w1">New batteries for electronic toys</li>
+            <li data-i18n="w2">Play mats for the play area</li>
+            <li data-i18n="w3">Movie screening equipment for our children's theatre</li>
+          </ul>
+          <a class="btn btn-line" href="#visit" data-i18n="i4b">Contact us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint" id="founders">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--yellow)" data-i18n="fLabel">The founders</span><h2 data-i18n="fTitle">Started by two students from Sri Ganganagar</h2></div>
+      <div class="founders">
+        <div class="founder reveal" style="--c:var(--pink)"><span class="avatar">AP</span><div><b data-i18n="f1n">Aaditri Pediwal</b><span data-i18n="f1r">Co-founder · 15 years old</span></div></div>
+        <div class="founder reveal" style="--c:var(--blue);--d:.08s"><span class="avatar">AA</span><div><b data-i18n="f2n">Akshit Aggarwal</b><span data-i18n="f2r">Co-founder · 16 years old</span></div></div>
+      </div>
+      <p class="story reveal" data-i18n="fStory">Aaditri and Akshit started Chahak so that no child in Sri Ganganagar has to grow up without toys to play with.</p>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--teal)" data-i18n="nwLabel">News</span><h2 data-i18n="nwTitle">What's been happening</h2></div>
+      <div class="news">
+        <article class="post reveal" style="--c:var(--orange)"><time data-i18n="n1d">January 2026</time><h3 data-i18n="n1t">Toy collection begins</h3><p data-i18n="n1p">Families across the city started giving unused toys to share with children who need them most.</p></article>
+        <article class="post reveal" style="--c:var(--pink);--d:.08s"><time data-i18n="n2d">28 February 2026</time><h3 data-i18n="n2t">Chahak opens its doors</h3><p data-i18n="n2p">The toy library opened in Jawahar Nagar, Sri Ganganagar, free for children from underprivileged families.</p></article>
+        <article class="post reveal" style="--c:var(--green);--d:.16s"><time data-i18n="n3d">Milestone</time><h3 data-i18n="n3t">12,000+ toys reach children</h3><p data-i18n="n3p">More than 12,000 toys have been given to children to support learning, creativity and development.</p></article>
+      </div>
+      <div class="insta reveal">
+        <div><span class="ig"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="#fff"/></svg></span><span><b>@chahaktoylibrary</b><small data-i18n="igP">Follow us for events, new arrivals and photos</small></span></div>
+        <a class="btn btn-line" href="https://www.instagram.com/chahaktoylibrary/" target="_blank" rel="noopener" data-i18n="igB">Open Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint" id="visit">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--blue)" data-i18n="vLabel">Visit & contact</span><h2 data-i18n="vTitle">Come and see us</h2><p data-i18n="vP">Bring your child to play, drop off a donation, or message us on WhatsApp.</p></div>
+      <div class="visit-grid">
+        <div class="panel reveal">
+          <div class="addr"><span class="sub" data-i18n="addrL">Address</span><strong>6, Jawahar Nagar Road</strong><span data-i18n="addrV">Jawahar Nagar, Sri Ganganagar, Rajasthan 335001</span></div>
+          <div><span class="sub" data-i18n="hrsL">Opening hours</span>
+            <div class="hours" style="margin-top:10px">
+              <div><span data-i18n="h1">Tuesday – Sunday</span><span data-i18n="h1v">10:00 am – 5:00 pm</span></div>
+              <div class="off"><span data-i18n="h2">Monday</span><span data-i18n="h2v">Closed</span></div>
+            </div>
+          </div>
+          <a class="btn btn-primary" href="https://maps.app.goo.gl/zZzhLvw3JoxioyiGA" target="_blank" rel="noopener" style="justify-self:start"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 17s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z" fill="#fff"/><circle cx="9" cy="7" r="2.2" fill="#1764d1"/></svg><span data-i18n="mapB">Open in Google Maps</span></a>
+        </div>
+        <div class="panel reveal" style="--d:.08s">
+          <div class="wa-list">
+            <span class="sub" data-i18n="waL1">For parents: updates from the library</span>
+            <div class="wa main">
+              <span class="w"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="#fff"/><path d="M8.6 7.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.6l-.5.6c-.1.2-.2.3 0 .6.6 1 1.6 2 2.7 2.5.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.3.1.4.2.4.4s0 1-.5 1.6c-.5.5-1.4.8-2 .8-1.3 0-3.2-.7-4.9-2.6-1.7-1.8-2.3-3.5-2.3-4.4 0-.9.4-1.6.7-2z" fill="#25d366"/></svg></span>
+              <span class="who"><b data-i18n="waC">Caretaker on duty</b><small data-i18n="waCd">Ask what's happening at the library today, or get updates about your child</small><span class="num">+91 70733 77843</span></span>
+              <span class="acts"><a class="chip go" href="https://wa.me/917073377843" target="_blank" rel="noopener">WhatsApp</a><button class="chip cp" type="button" data-copy="+91 70733 77843" data-i18n="copy">Copy</button></span>
+            </div>
+            <span class="sub" style="margin-top:10px" data-i18n="waL2">General enquiries, donations and birthdays</span>
+            <div class="wa">
+              <span class="w"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="#fff"/><path d="M8.6 7.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.6l-.5.6c-.1.2-.2.3 0 .6.6 1 1.6 2 2.7 2.5.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.3.1.4.2.4.4s0 1-.5 1.6c-.5.5-1.4.8-2 .8-1.3 0-3.2-.7-4.9-2.6-1.7-1.8-2.3-3.5-2.3-4.4 0-.9.4-1.6.7-2z" fill="#25d366"/></svg></span>
+              <span class="who"><b data-i18n="waK">Ms. Komal Aggarwal</b><span class="num">+91 96490 36363</span></span>
+              <span class="acts"><a class="chip go" href="https://wa.me/919649036363" target="_blank" rel="noopener">WhatsApp</a><button class="chip cp" type="button" data-copy="+91 96490 36363" data-i18n="copy">Copy</button></span>
+            </div>
+            <div class="wa">
+              <span class="w"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="#fff"/><path d="M8.6 7.3c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2 0 .4-.1.6l-.5.6c-.1.2-.2.3 0 .6.6 1 1.6 2 2.7 2.5.3.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.8.9c.3.1.4.2.4.4s0 1-.5 1.6c-.5.5-1.4.8-2 .8-1.3 0-3.2-.7-4.9-2.6-1.7-1.8-2.3-3.5-2.3-4.4 0-.9.4-1.6.7-2z" fill="#25d366"/></svg></span>
+              <span class="who"><b data-i18n="waR">Dr. Richa Pediwal</b><span class="num">+91 95870 36069</span></span>
+              <span class="acts"><a class="chip go" href="https://wa.me/919587036069" target="_blank" rel="noopener">WhatsApp</a><button class="chip cp" type="button" data-copy="+91 95870 36069" data-i18n="copy">Copy</button></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="head reveal"><span class="label" style="--c:var(--orange)" data-i18n="qLabel">Questions</span><h2 data-i18n="qTitle">Parents often ask</h2></div>
+      <div class="faq">
+        <details class="reveal"><summary data-i18n="q1">Does it cost anything?</summary><p data-i18n="a1">No. Access to all toys and games is free for children from underprivileged families.</p></details>
+        <details class="reveal"><summary data-i18n="q2">Which ages is Chahak for?</summary><p data-i18n="a2">All ages. We have baby walkers and stacking toys, ride-ons and ball pits, and board games and science kits for older children.</p></details>
+        <details class="reveal"><summary data-i18n="q3">When can we visit?</summary><p data-i18n="a3">Tuesday to Sunday, 10 am to 5 pm. The library is closed on Mondays.</p></details>
+        <details class="reveal"><summary data-i18n="q4">How do I get updates about my child?</summary><p data-i18n="a4">Message the caretaker on duty on WhatsApp at +91 70733 77843.</p></details>
+        <details class="reveal"><summary data-i18n="q5">Can we celebrate a birthday at Chahak?</summary><p data-i18n="a5">Yes. Bring a treat to share with the children and a toy to donate. Message Ms. Komal Aggarwal or Dr. Richa Pediwal on WhatsApp to plan the day.</p></details>
+        <details class="reveal"><summary data-i18n="q6">What toys can I donate?</summary><p data-i18n="a6">Clean toys in good working condition, and board games and puzzles with all their pieces. Message us on WhatsApp to arrange a drop-off.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div style="display:grid;gap:14px;align-content:start">
+        <a class="brand" href="#top"><img src="logo-sm.webp" alt="" width="160" height="160"><span><b data-i18n="brand">Chahak Toy Library</b><small data-i18n="fTag">Every child has the right to play.</small></span></a>
+        <p>6, Jawahar Nagar Road, Jawahar Nagar,<br>Sri Ganganagar, Rajasthan 335001</p>
+      </div>
+      <div>
+        <h3 data-i18n="tapT">About Tapovan Trust</h3>
+        <p data-i18n="tapP">Chahak is run by Tapovan Trust, a registered charitable society in Sri Ganganagar (Reg. No. 64/SRIGANGANAGAR/2011-12) that works in education and healthcare. The Trust is 80G and 12A certified.</p>
+        <p style="margin-top:10px"><a href="https://tapovantrust.com" target="_blank" rel="noopener" data-i18n="tapL">Visit tapovantrust.com →</a></p>
+      </div>
+      <div>
+        <h3 data-i18n="findT">Find us</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/chahaktoylibrary/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://wa.me/917073377843" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://maps.app.goo.gl/zZzhLvw3JoxioyiGA" target="_blank" rel="noopener">Google Maps</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal"><span>© 2026 Chahak Toy Library</span><span data-i18n="fHours">Open Tuesday – Sunday, 10 am – 5 pm</span></div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden><img id="lb-img" alt=""><button type="button" id="lb-close" aria-label="Close">×</button></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const IC={
+ ride:'<path d="M6 17a3 3 0 1 0 0 .01M18 17a3 3 0 1 0 0 .01M6 17l3-7h5l4 7M9 10l-1-3H5M14 10l2-4h3"/>',
+ rc:'<rect x="5" y="9" width="14" height="11" rx="2.5"/><circle cx="9.5" cy="14.5" r="1.6"/><path d="M14 13v3M12.5 14.5h3M15 9V4"/>',
+ board:'<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.2"/><circle cx="15" cy="9" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="9" cy="15" r="1.2"/><circle cx="15" cy="15" r="1.2"/>',
+ science:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3M7 15h10"/>',
+ active:'<ellipse cx="12" cy="13" rx="9" ry="3.5"/><path d="M5 15.5L4 21M19 15.5l1 5.5M12 16.5V21"/><circle cx="12" cy="5" r="2"/>',
+ pretend:'<path d="M4 11l8-6 8 6v9H4z"/><path d="M10 20v-5h4v5"/>',
+ soft:'<circle cx="7" cy="6" r="2.5"/><circle cx="17" cy="6" r="2.5"/><circle cx="12" cy="13" r="7"/><path d="M10 12h.01M14 12h.01M11 15.5h2"/>',
+ baby:'<circle cx="12" cy="5" r="2"/><path d="M8 21h8M9 18h6M10 15h4M11 12h2M12 7v1"/>',
+ music:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>'
+};
+const CATS=[
+ {i:"ride",c:"#e8372f",en:["Ride-ons & vehicles","Ride-on quad bikes, tractors, cars, bikes, scooters and push walkers."],hi:["सवारी वाले खिलौने","क्वाड बाइक, ट्रैक्टर, कारें, बाइक, स्कूटर और पुश वॉकर।"]},
+ {i:"rc",c:"#f58a07",en:["RC & toy cars","Remote-control cars, racing cars, police cars, trucks and trains."],hi:["रिमोट और खिलौना गाड़ियाँ","रिमोट कंट्रोल कारें, रेसिंग कारें, पुलिस कारें, ट्रक और ट्रेनें।"]},
+ {i:"board",c:"#7343d8",en:["Board & table games","Ludo, chess, Jenga, football board games and a mini pool table."],hi:["बोर्ड और टेबल गेम्स","लूडो, शतरंज, जेंगा, फ़ुटबॉल बोर्ड गेम और मिनी पूल टेबल।"]},
+ {i:"science",c:"#0d9488",en:["Science & learning","Science and electronics kits, word and number games, puzzles and books."],hi:["विज्ञान और पढ़ाई","विज्ञान और इलेक्ट्रॉनिक्स किट, शब्द और गिनती के खेल, पहेलियाँ और किताबें।"]},
+ {i:"active",c:"#1f9d47",en:["Active play","Trampoline, slide, ball pit, swing, skateboards, hula hoops and bowling sets."],hi:["उछल-कूद के खेल","ट्रैम्पोलिन, स्लाइड, बॉल पिट, झूला, स्केटबोर्ड, हूला हूप और बॉलिंग सेट।"]},
+ {i:"pretend",c:"#e23a82",en:["Dolls & pretend play","Dolls, doll houses, a play kitchen, doctor sets and fruit and vegetable sets."],hi:["गुड़िया और घर-घर","गुड़िया, गुड़िया घर, किचन सेट, डॉक्टर सेट और फल-सब्ज़ी सेट।"]},
+ {i:"soft",c:"#b7652b",en:["Soft toys","Teddy bears of every size, unicorns, pandas and plush animals."],hi:["सॉफ्ट टॉयज़","हर साइज़ के टेडी बियर, यूनिकॉर्न, पांडा और मुलायम जानवर।"]},
+ {i:"baby",c:"#1764d1",en:["Babies & toddlers","Baby walkers, stacking rings, ball-ramp towers, play gyms and bouncers."],hi:["छोटे बच्चों के लिए","बेबी वॉकर, स्टैकिंग रिंग, बॉल-रैम्प टावर, प्ले जिम और बाउंसर।"]},
+ {i:"music",c:"#c98a00",en:["Music & sound","Xylophones, toy pianos, guitars, drums and a karaoke mic stand."],hi:["संगीत के खिलौने","ज़ाइलोफ़ोन, खिलौना पियानो, गिटार, ड्रम और कराओके माइक।"]}
+];
+
+const HI={
+ brand:"चहक खिलौना लाइब्रेरी",brandSub:"Chahak Toy Library · श्रीगंगानगर",
+ nAbout:"परिचय",nToys:"खिलौने",nGallery:"गैलरी",nInvolved:"जुड़िए",nFounders:"संस्थापक",nNews:"समाचार",nContact:"संपर्क",nDonate:"खिलौने दान करें",
+ hLabel:"निःशुल्क खिलौना लाइब्रेरी · जवाहर नगर, श्रीगंगानगर",
+ hTitle:'हर बच्चे को <span class="hl">खेलने का हक़</span> है।',
+ hLede:"चहक एक खिलौना लाइब्रेरी है, जहाँ परिवारों के इस्तेमाल न होने वाले खिलौनों को नया घर मिलता है। बच्चे यहाँ सैकड़ों सवारी वाले खिलौनों, खेलों, पहेलियों, गुड़ियों और सॉफ्ट टॉयज़ के साथ निःशुल्क खेलते हैं।",
+ hVisit:"मिलने आइए",hDonate:"पुराने खिलौने दान करें",
+ st1:"खिलौने बच्चों तक पहुँचे",st2b:"निःशुल्क",st2:"ज़रूरतमंद बच्चों के लिए",st3b:"हर उम्र",st3:"छोटे बच्चों से किशोरों तक",st4b:"हफ़्ते में 6 दिन",st4:"सुबह 10 – शाम 5 बजे",
+ aLabel:"चहक के बारे में",aTitle:"जो खिलौना एक बच्चे के लिए छोटा पड़ गया, वह दूसरे बच्चे का सबसे प्यारा खिलौना बन सकता है",
+ aP:"चहक यानी चिड़ियों की ख़ुशी भरी चहचहाहट। हम परिवारों से वे खिलौने इकट्ठा करते हैं जो अब इस्तेमाल नहीं होते, उन्हें साफ़ करके सजाते हैं, और उन बच्चों के लिए खोलते हैं जिनके पास ये नहीं होते। यहाँ आने वाला हर बच्चा खेलता, सीखता और सपने देखता है।",
+ p1t:"ज़रूरतमंद बच्चों के लिए निःशुल्क",p1p:"ज़रूरतमंद परिवारों के बच्चों के लिए हर खिलौना और खेल निःशुल्क है।",
+ p2t:"खेल-खेल में सीखना",p2p:"विज्ञान किट, पहेलियाँ और बोर्ड गेम जिज्ञासा, धैर्य और समझ बढ़ाते हैं।",
+ p3t:"खिलौनों को नई ज़िंदगी",p3p:"घर में धूल खाने के बजाय, खिलौने एक बच्चे से दूसरे बच्चे तक पहुँचते रहते हैं।",
+ howLabel:"कैसे काम करता है",howTitle:"दान करने वाले की अलमारी से बच्चे के हाथों तक",
+ s1t:"परिवार दान करते हैं",s1p:"श्रीगंगानगर के लोग वे खिलौने लाते हैं जो उनके बच्चे अब नहीं खेलते।",
+ s2t:"हम साफ़ करके सजाते हैं",s2p:"हर खिलौने को जाँचा, साफ़ किया और प्रकार के अनुसार अलमारियों में रखा जाता है।",
+ s3t:"बच्चे खेलने आते हैं",s3p:"बच्चे जवाहर नगर की लाइब्रेरी में आकर अपनी पसंद के खिलौनों से खेलते हैं।",
+ s4t:"ख़ुशी आगे बढ़ती है",s4p:"खिलौने एक बच्चे से दूसरे तक जाते हैं, कुछ भी बेकार नहीं पड़ा रहता।",
+ tLabel:"हमारी अलमारियों में",tTitle:"हर तरह के खेल के लिए कुछ न कुछ",tP:"देखिए चहक में बच्चों को क्या-क्या मिलता है। दान से नए खिलौने लगातार आते रहते हैं।",
+ gLabel:"गैलरी",gTitle:"चहक के अंदर आइए",gP:"आसमानी दीवारें, खिलौनों से भरी अलमारियाँ, बॉल पिट, स्लाइड और झूला। किसी भी फ़ोटो को बड़ा देखने के लिए उस पर टैप करें।",vtag:"एक झलक",gcT:"और फ़ोटो Instagram पर",
+ iLabel:"जुड़िए",iTitle:"किसी बच्चे के खेल में मदद के तरीके",iP:"हर खिलौने, हर जश्न और हर मदद के साथ चहक आगे बढ़ता है।",
+ i1t:"अपने पुराने खिलौने दान करें",i1p:"अच्छी हालत के खिलौने, और सभी हिस्सों वाले बोर्ड गेम व पहेलियाँ। आपके पुराने खिलौने किसी और बच्चे की सबसे बड़ी ख़ुशी बन सकते हैं।",i1b:"दान के लिए संपर्क करें",
+ newTag:"नया",i2t:"चहक में जन्मदिन मनाइए",i2p:"अपने बच्चे का जन्मदिन लाइब्रेरी के बच्चों के साथ मनाइए। मिठाई या ट्रीट बाँटिए, साथ खेलिए, और इस दिन की याद में एक खिलौना दान कीजिए।",i2b:"जश्न बुक करें",
+ i3t:"एक खिलौना सेट प्रायोजित करें",i3p:"हमारे बढ़ते संग्रह के लिए नए शैक्षिक किट और विज्ञान के खिलौनों में मदद करें।",i3b:"हमसे बात करें",
+ i4t:"हमारी ज़रूरतें",w1:"इलेक्ट्रॉनिक खिलौनों के लिए नई बैटरियाँ",w2:"खेल क्षेत्र के लिए प्ले मैट",w3:"बच्चों के थिएटर के लिए फ़िल्म दिखाने का उपकरण",i4b:"संपर्क करें",
+ fLabel:"संस्थापक",fTitle:"श्रीगंगानगर के दो विद्यार्थियों ने की शुरुआत",
+ f1n:"आदित्री पेड़ीवाल",f1r:"सह-संस्थापक · 15 वर्ष",f2n:"अक्षित अग्रवाल",f2r:"सह-संस्थापक · 16 वर्ष",
+ fStory:"आदित्री और अक्षित ने चहक इसलिए शुरू किया ताकि श्रीगंगानगर में कोई भी बच्चा खिलौनों के बिना बड़ा न हो।",
+ nwLabel:"समाचार",nwTitle:"अब तक क्या हुआ",
+ n1d:"जनवरी 2026",n1t:"खिलौना संग्रह की शुरुआत",n1p:"शहर भर के परिवारों ने ज़रूरतमंद बच्चों के साथ बाँटने के लिए अपने बेकार पड़े खिलौने देना शुरू किया।",
+ n2d:"28 फ़रवरी 2026",n2t:"चहक की शुरुआत",n2p:"श्रीगंगानगर के जवाहर नगर में खिलौना लाइब्रेरी खुली, ज़रूरतमंद परिवारों के बच्चों के लिए निःशुल्क।",
+ n3d:"उपलब्धि",n3t:"12,000+ खिलौने बच्चों तक पहुँचे",n3p:"सीखने, रचनात्मकता और विकास के लिए 12,000 से ज़्यादा खिलौने बच्चों को दिए जा चुके हैं।",
+ igP:"कार्यक्रमों, नए खिलौनों और तस्वीरों के लिए हमें फ़ॉलो करें",igB:"Instagram खोलें",
+ vLabel:"मिलने आइए",vTitle:"आइए, मिलते हैं",vP:"बच्चे को खेलने लाइए, खिलौने दान कीजिए, या WhatsApp पर संदेश भेजिए।",
+ addrL:"पता",addrV:"जवाहर नगर, श्रीगंगानगर, राजस्थान 335001",hrsL:"खुलने का समय",h1:"मंगलवार – रविवार",h1v:"सुबह 10 – शाम 5 बजे",h2:"सोमवार",h2v:"बंद",mapB:"Google Maps में खोलें",
+ waL1:"अभिभावकों के लिए: लाइब्रेरी से अपडेट",waC:"ड्यूटी पर केयरटेकर",waCd:"आज लाइब्रेरी में क्या हो रहा है पूछें, या अपने बच्चे के बारे में अपडेट लें",
+ waL2:"सामान्य जानकारी, दान और जन्मदिन",waK:"सुश्री कोमल अग्रवाल",waR:"डॉ. ऋचा पेड़ीवाल",copy:"कॉपी",
+ qLabel:"सवाल",qTitle:"अभिभावक अक्सर पूछते हैं",
+ q1:"क्या इसका कोई शुल्क है?",a1:"नहीं। ज़रूरतमंद परिवारों के बच्चों के लिए सभी खिलौने और खेल निःशुल्क हैं।",
+ q2:"चहक किस उम्र के बच्चों के लिए है?",a2:"हर उम्र के लिए। छोटे बच्चों के लिए वॉकर और स्टैकिंग खिलौने, सवारी वाले खिलौने और बॉल पिट, और बड़े बच्चों के लिए बोर्ड गेम व विज्ञान किट।",
+ q3:"हम कब आ सकते हैं?",a3:"मंगलवार से रविवार, सुबह 10 से शाम 5 बजे तक। सोमवार को लाइब्रेरी बंद रहती है।",
+ q4:"अपने बच्चे के बारे में अपडेट कैसे मिलेंगे?",a4:"ड्यूटी पर मौजूद केयरटेकर को WhatsApp पर +91 70733 77843 पर संदेश भेजें।",
+ q5:"क्या हम चहक में जन्मदिन मना सकते हैं?",a5:"हाँ। बच्चों के साथ बाँटने के लिए ट्रीट और दान के लिए एक खिलौना लाइए। दिन तय करने के लिए सुश्री कोमल अग्रवाल या डॉ. ऋचा पेड़ीवाल को WhatsApp करें।",
+ q6:"मैं कौन से खिलौने दान कर सकता/सकती हूँ?",a6:"साफ़ और ठीक से चलने वाले खिलौने, और सभी हिस्सों वाले बोर्ड गेम व पहेलियाँ। दान के लिए WhatsApp पर संपर्क करें।",
+ fTag:"हर बच्चे को खेलने का हक़ है।",tapT:"तपोवन ट्रस्ट के बारे में",
+ tapP:"चहक का संचालन तपोवन ट्रस्ट करता है, जो श्रीगंगानगर की एक पंजीकृत धर्मार्थ संस्था (पंजीकरण सं. 64/SRIGANGANAGAR/2011-12) है और शिक्षा व स्वास्थ्य के क्षेत्र में काम करती है। ट्रस्ट 80G और 12A प्रमाणित है।",
+ tapL:"tapovantrust.com पर जाएँ →",findT:"हमसे जुड़ें",fHours:"मंगलवार – रविवार, सुबह 10 – शाम 5 बजे"
+};
+
+let lang="en";const EN={};
+document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(!(k in EN))EN[k]=el.innerHTML;});
+
+function renderCats(){
+  document.getElementById("cats").innerHTML=CATS.map((c,i)=>`
+    <article class="cat reveal" style="--c:${c.c};--d:${(i%3)*.07}s">
+      <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[c.i]}</svg></span>
+      <h3>${c[lang][0]}</h3><p>${c[lang][1]}</p>
+    </article>`).join("");
+}
+function openStatus(){
+  const el=document.getElementById("open-status"),dot=document.getElementById("dot");
+  let t=lang==="hi"?"मंगलवार से रविवार, सुबह 10 – शाम 5 बजे":"Open Tuesday to Sunday, 10 am – 5 pm";
+  try{
+    const p=Object.fromEntries(new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Kolkata",weekday:"short",hour:"numeric",hour12:false}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+    const h=+p.hour,open=p.weekday!=="Mon"&&h>=10&&h<17;
+    dot.classList.toggle("open",open);
+    if(open)t=lang==="hi"?"अभी खुला है · शाम 5 बजे तक":"Open now · until 5 pm";
+    else t=lang==="hi"?"अभी बंद है · मंगलवार–रविवार, सुबह 10 – शाम 5":"Closed now · open Tuesday to Sunday, 10 am – 5 pm";
+  }catch(e){}
+  el.textContent=t;
+}
+function setLang(l){
+  lang=l;document.documentElement.lang=l;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const v=l==="hi"?HI[el.dataset.i18n]:EN[el.dataset.i18n];if(v!=null)el.innerHTML=v;});
+  document.getElementById("lang-en").setAttribute("aria-pressed",l==="en");
+  document.getElementById("lang-hi").setAttribute("aria-pressed",l==="hi");
+  renderCats();openStatus();setupReveal();
+  try{localStorage.setItem("chahak-lang",l)}catch(e){}
+}
+document.getElementById("lang-en").onclick=()=>setLang("en");
+document.getElementById("lang-hi").onclick=()=>setLang("hi");
+
+let io;const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function setupReveal(){
+  if(!("IntersectionObserver" in window)||reduce)return;
+  if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove("pre");io.unobserve(e.target);}}),{threshold:.1});
+  document.querySelectorAll(".reveal:not(.seen)").forEach(el=>{el.classList.add("seen");if(el.getBoundingClientRect().top>innerHeight*.95){el.classList.add("pre");io.observe(el);}});
+}
+
+/* count-up on the stats band */
+(function(){
+  const el=document.getElementById("count");if(reduce||!("IntersectionObserver" in window))return;
+  const band=el.closest(".stats");if(band.getBoundingClientRect().top<innerHeight)return;
+  el.textContent="0";
+  const o=new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;o.disconnect();const t0=performance.now();
+    (function f(t){const k=Math.min(1,(t-t0)/1400),v=Math.round(12000*(1-Math.pow(1-k,3)));el.textContent=v.toLocaleString("en-IN");if(k<1)requestAnimationFrame(f);})(t0);},{threshold:.5});
+  o.observe(band);
+})();
+
+const mb=document.getElementById("menu-btn"),mm=document.getElementById("mobile-menu");
+mb.onclick=()=>{mm.hidden=!mm.hidden;mb.setAttribute("aria-expanded",!mm.hidden)};
+mm.addEventListener("click",e=>{if(e.target.tagName==="A"){mm.hidden=true;mb.setAttribute("aria-expanded","false")}});
+
+const lb=document.getElementById("lightbox"),lbi=document.getElementById("lb-img");
+document.querySelectorAll("[data-full]").forEach(b=>b.addEventListener("click",()=>{lbi.src=b.dataset.full;lbi.alt=b.querySelector("img").alt;lb.hidden=false;document.getElementById("lb-close").focus();}));
+const closeLb=()=>{lb.hidden=true};
+document.getElementById("lb-close").onclick=closeLb;
+lb.addEventListener("click",e=>{if(e.target===lb)closeLb()});
+addEventListener("keydown",e=>{if(e.key==="Escape")closeLb()});
+
+const toast=document.getElementById("toast");
+function show(t){toast.textContent=t;toast.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove("show"),2200)}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-copy]");if(!b)return;const n=b.dataset.copy;
+  const sel=()=>{const s=b.closest(".wa").querySelector(".num"),r=document.createRange();r.selectNodeContents(s);const g=getSelection();g.removeAllRanges();g.addRange(r);show(lang==="hi"?"नंबर चुन लिया गया है":"Number selected");};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(n).then(()=>show((lang==="hi"?"कॉपी हो गया: ":"Copied ")+n),sel);else sel();
+});
+
+let saved="en";try{saved=localStorage.getItem("chahak-lang")||"en"}catch(e){}
+setLang(saved==="hi"?"hi":"en");
+</script>
