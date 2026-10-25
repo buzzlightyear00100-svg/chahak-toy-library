@@ -193,6 +193,21 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rg
 .post{border:1px solid var(--line);border-radius:var(--r);padding:24px;background:#fff;display:grid;gap:10px;align-content:start}
 .post time{font-family:var(--head);font-weight:600;font-size:13.5px;color:var(--c)}
 .post p{color:var(--muted);font-size:16px}
+.events .post .src{font-size:13.5px;color:var(--muted);margin-top:2px}
+.press-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-top:48px;margin-bottom:16px}
+.press-head h3{font-size:22px}
+.press-head p{color:var(--muted);font-size:15.5px}
+.press{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.clip{min-width:0}
+.clip button{all:unset;cursor:zoom-in;display:grid;gap:10px;width:100%}
+.clip button:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:12px}
+.clip .thumb{aspect-ratio:3/4;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--tint);padding:10px;display:grid;place-items:center;transition:box-shadow .25s,transform .25s}
+.clip:hover .thumb{box-shadow:var(--shadow);transform:translateY(-3px)}
+.clip img{width:100%;height:100%;object-fit:contain}
+.clip b{display:block;font-family:var(--head);font-weight:600;font-size:15px;line-height:1.3}
+.clip small{display:block;color:var(--muted);font-size:13.5px;line-height:1.4}
+@media (max-width:960px){.press{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.press{grid-template-columns:1fr 1fr}}
 .insta{margin-top:18px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:22px 26px;border-radius:var(--r);border:1px solid var(--line);background:#fff}
 .insta div{display:flex;align-items:center;gap:14px}
 .insta .ig{width:48px;height:48px;border-radius:12px;background:linear-gradient(45deg,#f9bf1a,#e8372f 45%,#e23a82 65%,#7343d8);display:grid;place-items:center;flex:none}
@@ -423,11 +438,19 @@ footer{background:var(--ink);color:#d7daea;padding-block:64px 32px}
 
   <section id="news">
     <div class="wrap">
-      <div class="head reveal"><span class="label" style="--c:var(--teal)" data-i18n="nwLabel">News</span><h2 data-i18n="nwTitle">What's been happening</h2></div>
-      <div class="news">
-        <article class="post reveal" style="--c:var(--orange)"><time data-i18n="n1d">January 2026</time><h3 data-i18n="n1t">Toy collection begins</h3><p data-i18n="n1p">Families across the city started giving unused toys to share with children who need them most.</p></article>
-        <article class="post reveal" style="--c:var(--pink);--d:.08s"><time data-i18n="n2d">28 February 2026</time><h3 data-i18n="n2t">Chahak opens its doors</h3><p data-i18n="n2p">The toy library opened in Jawahar Nagar, Sri Ganganagar, free for children from underprivileged families.</p></article>
-        <article class="post reveal" style="--c:var(--green);--d:.16s"><time data-i18n="n3d">Milestone</time><h3 data-i18n="n3t">12,000+ toys collected</h3><p data-i18n="n3p">More than 12,000 toys have been collected so far to support children's learning, creativity and development.</p></article>
+      <div class="head reveal"><span class="label" style="--c:var(--teal)" data-i18n="nwLabel">News</span><h2 data-i18n="nwTitle">Chahak in the news</h2></div>
+      <div class="news events">
+        <article class="post reveal" style="--c:var(--pink)"><time data-i18n="e1d">28 February 2026</time><h3 data-i18n="e1t">Chahak opens with 12,000+ toys</h3><p data-i18n="e1p">The toy library opened in Jawahar Nagar with toys, games and a mini theatre, as a programme run by children, for children.</p><span class="src" data-i18n="e1s">Dainik Bhaskar</span></article>
+        <article class="post reveal" style="--c:var(--green);--d:.08s"><time data-i18n="e2d">19 August 2026</time><h3 data-i18n="e2t">200+ children join a games day</h3><p data-i18n="e2p">Chahak held indoor and outdoor games, including carrom and ludo, at Indira Vatika in Jawahar Nagar.</p><span class="src" data-i18n="e2s">Sandhya Border Times</span></article>
+        <article class="post reveal" style="--c:var(--orange);--d:.16s"><time data-i18n="e3d">Recent visit</time><h3 data-i18n="e3t">Map of Happiness team visits Chahak</h3><p data-i18n="e3p">The team spent time with the children and brought special gifts and toys for them.</p><span class="src" data-i18n="e3s">Morning Plus</span></article>
+      </div>
+      <div class="press-head reveal"><h3 data-i18n="prT">Press clippings and posters</h3><p data-i18n="prP">Tap any clipping to read it in full.</p></div>
+      <div class="press">
+        <figure class="clip reveal" style="margin:0"><button type="button" data-full="photos/press-bhaskar.webp" aria-label="View larger"><span class="thumb"><img src="photos/press-bhaskar.webp" alt="Dainik Bhaskar, 28 February 2026: Chahak toy library opens with a bank of more than 12,000 toys" loading="lazy"></span><span><b data-i18n="c1b">Dainik Bhaskar</b><small data-i18n="c1s">28 Feb 2026</small></span></button></figure>
+        <figure class="clip reveal" style="margin:0;--d:.06s"><button type="button" data-full="photos/press-bordertimes.webp" aria-label="View larger"><span class="thumb"><img src="photos/press-bordertimes.webp" alt="Sandhya Border Times, 19 August 2026: more than 200 children take part in games at Chahak" loading="lazy"></span><span><b data-i18n="c2b">Sandhya Border Times</b><small data-i18n="c2s">19 Aug 2026</small></span></button></figure>
+        <figure class="clip reveal" style="margin:0;--d:.12s"><button type="button" data-full="photos/press-morningplus.webp" aria-label="View larger"><span class="thumb"><img src="photos/press-morningplus.webp" alt="Morning Plus: Map of Happiness team shares joy at Chahak Toy Library" loading="lazy"></span><span><b data-i18n="c3b">Morning Plus</b><small data-i18n="c3s">Map of Happiness visit</small></span></button></figure>
+        <figure class="clip reveal" style="margin:0;--d:.18s"><button type="button" data-full="photos/poster-2.webp" aria-label="View larger"><span class="thumb"><img src="photos/poster-2.webp" alt="Chahak Toy Library poster with the Chahak logo" loading="lazy"></span><span><b data-i18n="c4b">Chahak poster</b><small data-i18n="c4s">With the Chahak logo</small></span></button></figure>
+        <figure class="clip reveal" style="margin:0;--d:.24s"><button type="button" data-full="photos/poster-1.webp" aria-label="View larger"><span class="thumb"><img src="photos/poster-1.webp" alt="Chahak poster: toys, games, mini theatre and much more" loading="lazy"></span><span><b data-i18n="c5b">Chahak poster</b><small data-i18n="c5s">Toys, games and mini theatre</small></span></button></figure>
       </div>
       <div class="insta reveal">
         <div><span class="ig"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="#fff"/></svg></span><span><b>@chahaktoylibrary</b><small data-i18n="igP">Follow us for events, new arrivals and photos</small></span></div>
@@ -570,10 +593,12 @@ const HI={
  fLabel:"संस्थापक",fTitle:"श्रीगंगानगर के दो विद्यार्थियों ने की शुरुआत",
  f1n:"आदित्री पेड़ीवाल",f1r:"सह-संस्थापक · कक्षा 9 · 14 वर्ष",f1q:"नमस्ते, मैं आदित्री हूँ, कक्षा 9 की छात्रा और चहक की सह-संस्थापक। मेरा हमेशा से मानना रहा है कि बचपन में खेल, जिज्ञासा और खोजने की आज़ादी के लिए जगह होनी चाहिए। चहक मेरे लिए इसलिए ख़ास है क्योंकि हर बच्चा, चाहे उसकी परिस्थितियाँ कैसी भी हों, एक ऐसी जगह का हक़दार है जहाँ वह बस एक बच्चा बनकर रह सके। चहक के ज़रिए मैं बच्चों के लिए खेलने, नई चीज़ें खोजने और ऐसी यादें बनाने के और मौके बनाना चाहती हूँ जो हमेशा उनके साथ रहें। मेरे लिए यह एक सरल लेकिन ज़रूरी बात है: यह पक्का करना कि हर बच्चा बचपन की ख़ुशी को महसूस कर सके।",f2n:"अक्षित अग्रवाल",f2r:"सह-संस्थापक · कक्षा 10 · 16 वर्ष",f2q:"नमस्ते, मैं अक्षित हूँ, चहक का सह-संस्थापक और कक्षा 10 का छात्र। मेरा मानना है कि खेल बड़े होने का एक अहम हिस्सा है, जो बच्चों को सीखने, दोस्त बनाने और ख़ुद को व्यक्त करने में मदद करता है। चहक हमें खिलौनों, गतिविधियों और खोजने के मौकों से भरी एक जगह बनाकर यह अनुभव ज़्यादा बच्चों तक पहुँचाने का अवसर देता है। चहक का हिस्सा होने का मतलब है एक ऐसे काम के लिए मेहनत करना जो बच्चों की रोज़मर्रा की ज़िंदगी में सच में बदलाव ला सके, और मुझे उम्मीद है कि हम यहाँ आने वाले बच्चों के लिए और भी मुस्कानें, अनुभव और मौके लाते रहेंगे।",
  
- nwLabel:"समाचार",nwTitle:"अब तक क्या हुआ",
- n1d:"जनवरी 2026",n1t:"खिलौना संग्रह की शुरुआत",n1p:"शहर भर के परिवारों ने ज़रूरतमंद बच्चों के साथ बाँटने के लिए अपने बेकार पड़े खिलौने देना शुरू किया।",
- n2d:"28 फ़रवरी 2026",n2t:"चहक की शुरुआत",n2p:"श्रीगंगानगर के जवाहर नगर में खिलौना लाइब्रेरी खुली, ज़रूरतमंद परिवारों के बच्चों के लिए निःशुल्क।",
- n3d:"उपलब्धि",n3t:"12,000+ खिलौने इकट्ठा हुए",n3p:"बच्चों के सीखने, रचनात्मकता और विकास के लिए अब तक 12,000 से ज़्यादा खिलौने इकट्ठा किए जा चुके हैं।",
+ nwLabel:"समाचार",nwTitle:"अख़बारों में चहक",
+ e1d:"28 फ़रवरी 2026",e1t:"12,000+ खिलौनों के साथ चहक की शुरुआत",e1p:"जवाहर नगर में खिलौना लाइब्रेरी खुली, जिसमें खिलौने, गेम्स और एक मिनी थिएटर है। यह बच्चों द्वारा बच्चों के लिए चलाया जाने वाला कार्यक्रम है।",e1s:"दैनिक भास्कर",
+ e2d:"19 अगस्त 2026",e2t:"200 से ज़्यादा बच्चों ने खेलों में लिया हिस्सा",e2p:"चहक ने जवाहर नगर की इंदिरा वाटिका में कैरम और लूडो समेत कई इनडोर और आउटडोर खेल आयोजित किए।",e2s:"सांध्य बॉर्डर टाइम्स",
+ e3d:"हाल ही में",e3t:"मैप ऑफ़ हैप्पीनेस टीम ने बाँटी ख़ुशियाँ",e3p:"टीम ने बच्चों के साथ समय बिताया और उनके लिए ख़ास उपहार और खिलौने लेकर आई।",e3s:"मॉर्निंग प्लस",
+ prT:"अख़बार की कतरनें और पोस्टर",prP:"पूरा पढ़ने के लिए किसी भी कतरन पर टैप करें।",
+ c1b:"दैनिक भास्कर",c1s:"28 फ़रवरी 2026",c2b:"सांध्य बॉर्डर टाइम्स",c2s:"19 अगस्त 2026",c3b:"मॉर्निंग प्लस",c3s:"मैप ऑफ़ हैप्पीनेस का दौरा",c4b:"चहक पोस्टर",c4s:"चहक लोगो के साथ",c5b:"चहक पोस्टर",c5s:"खिलौने, गेम्स और मिनी थिएटर",
  igP:"कार्यक्रमों, नए खिलौनों और तस्वीरों के लिए हमें फ़ॉलो करें",igB:"Instagram खोलें",
  vLabel:"मिलने आइए",vTitle:"आइए, मिलते हैं",vP:"बच्चे को खेलने लाइए, खिलौने दान कीजिए, या WhatsApp पर संदेश भेजिए।",
  addrL:"पता",addrV:"जवाहर नगर, श्रीगंगानगर, राजस्थान 335001",hrsL:"खुलने का समय",h1:"मंगलवार – रविवार",h1v:"सुबह 10 – शाम 5 बजे",h2:"सोमवार",h2v:"बंद",mapB:"Google Maps में खोलें",
