@@ -181,11 +181,11 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rg
 
 /* founders */
 .founders{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.founder{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:26px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.founder{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;align-content:start;padding:26px;border:1px solid var(--line);border-radius:16px;background:#fff}
 .avatar{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-family:var(--head);font-weight:700;font-size:28px;color:#fff;background:var(--c)}
 .founder b{display:block;font-family:var(--head);font-size:21px;line-height:1.25}
-.founder span{color:var(--muted);font-size:15.5px}
-.story{margin-top:22px;max-width:760px;color:var(--muted);font-size:18px}
+.founder div>span{color:var(--muted);font-size:15.5px}
+.founder blockquote{grid-column:1/-1;margin:4px 0 0;padding-left:18px;border-left:3px solid var(--c);font-size:16.5px;line-height:1.75;color:var(--ink)}
 @media (max-width:760px){.founders{grid-template-columns:1fr}}
 
 /* news */
@@ -415,10 +415,9 @@ footer{background:var(--ink);color:#d7daea;padding-block:64px 32px}
     <div class="wrap">
       <div class="head reveal"><span class="label" style="--c:var(--yellow)" data-i18n="fLabel">The founders</span><h2 data-i18n="fTitle">Started by two students from Sri Ganganagar</h2></div>
       <div class="founders">
-        <div class="founder reveal" style="--c:var(--pink)"><span class="avatar">AP</span><div><b data-i18n="f1n">Aaditri Periwal</b><span data-i18n="f1r">Co-founder · 14 years old</span></div></div>
-        <div class="founder reveal" style="--c:var(--blue);--d:.08s"><span class="avatar">AA</span><div><b data-i18n="f2n">Akshit Aggarwal</b><span data-i18n="f2r">Co-founder · 16 years old</span></div></div>
+        <div class="founder reveal" style="--c:var(--pink)"><span class="avatar">AP</span><div><b data-i18n="f1n">Aaditri Periwal</b><span data-i18n="f1r">Co-founder · Grade 9 · 14 years old</span></div><blockquote data-i18n="f1q">Hi, I’m Aaditri, a Grade 9 student and co-founder of Chahak. I’ve always believed that childhood should have room for play, curiosity, and the freedom to explore. Chahak is something I care about because every child deserves a space where they can simply be a child, regardless of their circumstances. Through Chahak, I hope to help create more opportunities for children to play, discover new things, and make memories that stay with them. For me, it’s about something simple but important: making sure that every child gets to experience the joy of childhood.</blockquote></div>
+        <div class="founder reveal" style="--c:var(--blue);--d:.08s"><span class="avatar">AA</span><div><b data-i18n="f2n">Akshit Aggarwal</b><span data-i18n="f2r">Co-founder · Grade 10 · 16 years old</span></div><blockquote data-i18n="f2q">Hi, I’m Akshit, co-founder of Chahak and a Grade 10 student. I believe that play is an important part of growing up, helping children learn, build friendships, and express themselves. Chahak gives us an opportunity to make that experience accessible to more children by creating a space filled with toys, activities, and opportunities to explore. Being part of Chahak means working towards something that can make a real difference in children's everyday lives, and I hope we can continue to bring more smiles, experiences, and opportunities to the children who visit us.</blockquote></div>
       </div>
-      <p class="story reveal" data-i18n="fStory">Aaditri and Akshit started Chahak so that no child in Sri Ganganagar has to grow up without toys to play with.</p>
     </div>
   </section>
 
@@ -569,8 +568,8 @@ const HI={
  i3t:"एक खिलौना सेट प्रायोजित करें",i3p:"हमारे बढ़ते संग्रह के लिए नए शैक्षिक किट और विज्ञान के खिलौनों में मदद करें।",i3b:"हमसे बात करें",
  i4t:"हमारी ज़रूरतें",w1:"इलेक्ट्रॉनिक खिलौनों के लिए नई बैटरियाँ",w2:"खेल क्षेत्र के लिए प्ले मैट",w3:"बच्चों के थिएटर के लिए फ़िल्म दिखाने का उपकरण",i4b:"संपर्क करें",
  fLabel:"संस्थापक",fTitle:"श्रीगंगानगर के दो विद्यार्थियों ने की शुरुआत",
- f1n:"आदित्री पेड़ीवाल",f1r:"सह-संस्थापक · 14 वर्ष",f2n:"अक्षित अग्रवाल",f2r:"सह-संस्थापक · 16 वर्ष",
- fStory:"आदित्री और अक्षित ने चहक इसलिए शुरू किया ताकि श्रीगंगानगर में कोई भी बच्चा खिलौनों के बिना बड़ा न हो।",
+ f1n:"आदित्री पेड़ीवाल",f1r:"सह-संस्थापक · कक्षा 9 · 14 वर्ष",f1q:"नमस्ते, मैं आदित्री हूँ, कक्षा 9 की छात्रा और चहक की सह-संस्थापक। मेरा हमेशा से मानना रहा है कि बचपन में खेल, जिज्ञासा और खोजने की आज़ादी के लिए जगह होनी चाहिए। चहक मेरे लिए इसलिए ख़ास है क्योंकि हर बच्चा, चाहे उसकी परिस्थितियाँ कैसी भी हों, एक ऐसी जगह का हक़दार है जहाँ वह बस एक बच्चा बनकर रह सके। चहक के ज़रिए मैं बच्चों के लिए खेलने, नई चीज़ें खोजने और ऐसी यादें बनाने के और मौके बनाना चाहती हूँ जो हमेशा उनके साथ रहें। मेरे लिए यह एक सरल लेकिन ज़रूरी बात है: यह पक्का करना कि हर बच्चा बचपन की ख़ुशी को महसूस कर सके।",f2n:"अक्षित अग्रवाल",f2r:"सह-संस्थापक · कक्षा 10 · 16 वर्ष",f2q:"नमस्ते, मैं अक्षित हूँ, चहक का सह-संस्थापक और कक्षा 10 का छात्र। मेरा मानना है कि खेल बड़े होने का एक अहम हिस्सा है, जो बच्चों को सीखने, दोस्त बनाने और ख़ुद को व्यक्त करने में मदद करता है। चहक हमें खिलौनों, गतिविधियों और खोजने के मौकों से भरी एक जगह बनाकर यह अनुभव ज़्यादा बच्चों तक पहुँचाने का अवसर देता है। चहक का हिस्सा होने का मतलब है एक ऐसे काम के लिए मेहनत करना जो बच्चों की रोज़मर्रा की ज़िंदगी में सच में बदलाव ला सके, और मुझे उम्मीद है कि हम यहाँ आने वाले बच्चों के लिए और भी मुस्कानें, अनुभव और मौके लाते रहेंगे।",
+ 
  nwLabel:"समाचार",nwTitle:"अब तक क्या हुआ",
  n1d:"जनवरी 2026",n1t:"खिलौना संग्रह की शुरुआत",n1p:"शहर भर के परिवारों ने ज़रूरतमंद बच्चों के साथ बाँटने के लिए अपने बेकार पड़े खिलौने देना शुरू किया।",
  n2d:"28 फ़रवरी 2026",n2t:"चहक की शुरुआत",n2p:"श्रीगंगानगर के जवाहर नगर में खिलौना लाइब्रेरी खुली, ज़रूरतमंद परिवारों के बच्चों के लिए निःशुल्क।",
