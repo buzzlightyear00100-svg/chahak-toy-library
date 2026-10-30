@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chahak Toy Library – Free Toy Library for Children in Sri Ganganagar</title>
@@ -288,7 +289,8 @@ footer{background:var(--ink);color:#d7daea;padding-block:64px 32px}
   .reveal.pre{opacity:1;transform:none}
 }
 </style>
-
+</head>
+<body>
 <div class="rainbow" aria-hidden="true"></div>
 <header id="hdr">
   <div class="wrap nav">
@@ -702,3 +704,5 @@ document.addEventListener("click",e=>{
 let saved="en";try{saved=localStorage.getItem("chahak-lang")||"en"}catch(e){}
 setLang(saved==="hi"?"hi":"en");
 </script>
+</body>
+</html>
