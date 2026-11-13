@@ -173,9 +173,8 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rg
 .play-head{margin:64px 0 22px;max-width:640px}
 .play-head h3{font-size:26px;margin:0 0 8px}
 .play-head p{margin:0;color:var(--muted,#555)}
-.play{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.play{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .play>*{border-radius:var(--r);overflow:hidden;position:relative;min-width:0;aspect-ratio:4/5;background:#dfe6f3}
-.play>.wide{grid-column:span 2;aspect-ratio:auto}
 .play img,.play video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
 .play button{all:unset;cursor:zoom-in;display:block;width:100%;height:100%}
 .play button:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
@@ -184,6 +183,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rg
 .play .p-cta h3{font-size:22px;margin:0;color:var(--ink)}
 .play .p-cta p{margin:0;color:var(--ink);font-size:15px}
 .play .p-cta a{color:var(--ink);font-weight:700;text-decoration:none;border-bottom:2px solid var(--ink);align-self:flex-start}
+@media (max-width:1100px){.play .p-cta{padding:16px;gap:8px}.play .p-cta h3{font-size:19px}.play .p-cta p{font-size:14px;line-height:1.4}}
 @media (max-width:860px){.play{grid-template-columns:1fr 1fr;gap:10px}.play-head{margin-top:48px}.play .p-cta{padding:14px;gap:6px}.play .p-cta h3{font-size:18px}.play .p-cta p{font-size:13.5px;line-height:1.4}}
 .vtag{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:600;padding:5px 10px;border-radius:8px;display:flex;align-items:center;gap:6px}
 .vtag i{width:7px;height:7px;border-radius:50%;background:var(--red)}
@@ -419,19 +419,18 @@ footer{background:var(--ink);color:#d7daea;padding-block:64px 32px}
         <div class="g-p reveal" style="--d:.12s"><button type="button" data-full="photos/play-corner.webp" aria-label="View larger"><img src="photos/play-corner.webp" alt="Ball pit with a slide, skateboards, a mini pool table and karaoke stand" loading="lazy"></button></div>
         <div class="g-c reveal" style="--d:.18s"><h3 data-i18n="gcT">More photos on Instagram</h3><a href="https://www.instagram.com/chahaktoylibrary/" target="_blank" rel="noopener">@chahaktoylibrary →</a></div>
       </div>
-      <div class="play-head reveal"><h3 data-i18n="pT">Children at play</h3><p data-i18n="pP">Real moments from the library: trucks on the mat, the play kitchen, the trampoline and a first go at VR.</p></div>
+      <div class="play-head reveal"><h3 data-i18n="pT">Children at play</h3><p data-i18n="pP">Real moments from the library: trucks on the mat, the play kitchen, wooden blocks and a first go at VR.</p></div>
       <div class="play">
         <div class="reveal" style="--d:0s"><video data-src="photos/play-1.mp4" poster="photos/play-1-poster.webp" muted loop playsinline preload="none" aria-label="Children building with wooden blocks and playing on the mats"></video></div>
         <div class="reveal" style="--d:0.06s"><button type="button" data-full="photos/kids-truck.webp" aria-label="View larger"><img src="photos/kids-truck.webp" alt="A boy plays with a red car-carrier truck on the foam mats" loading="lazy"></button></div>
-        <div class="reveal wide" style="--d:0.12s"><button type="button" data-full="photos/kids-trampoline.webp" aria-label="View larger"><img src="photos/kids-trampoline.webp" alt="Children jump on the trampoline next to the ride-on jeeps" loading="lazy"></button></div>
-        <div class="reveal" style="--d:0s"><button type="button" data-full="photos/kids-animals.webp" aria-label="View larger"><img src="photos/kids-animals.webp" alt="A little girl in sunglasses lines up animal figures at a blue table" loading="lazy"></button></div>
-        <div class="reveal" style="--d:0.06s"><video data-src="photos/play-2.mp4" poster="photos/play-2-poster.webp" muted loop playsinline preload="none" aria-label="Children drawing and chatting on the play mats"></video></div>
-        <div class="reveal" style="--d:0.12s"><button type="button" data-full="photos/kids-kitchen.webp" aria-label="View larger"><img src="photos/kids-kitchen.webp" alt="A girl and a boy cook up a meal in the play kitchen" loading="lazy"></button></div>
-        <div class="reveal" style="--d:0.18s"><video data-src="photos/play-3.mp4" poster="photos/play-3-poster.webp" muted loop playsinline preload="none" aria-label="Children choosing toys from the shelves"></video></div>
+        <div class="reveal" style="--d:0.12s"><button type="button" data-full="photos/kids-animals.webp" aria-label="View larger"><img src="photos/kids-animals.webp" alt="A little girl in sunglasses lines up animal figures at a blue table" loading="lazy"></button></div>
+        <div class="reveal" style="--d:0.18s"><video data-src="photos/play-2.mp4" poster="photos/play-2-poster.webp" muted loop playsinline preload="none" aria-label="Children drawing and chatting on the play mats"></video></div>
+        <div class="reveal" style="--d:0.24s"><button type="button" data-full="photos/kids-kitchen.webp" aria-label="View larger"><img src="photos/kids-kitchen.webp" alt="A girl and a boy cook up a meal in the play kitchen" loading="lazy"></button></div>
         <div class="reveal" style="--d:0s"><button type="button" data-full="photos/kids-vr.webp" aria-label="View larger"><img src="photos/kids-vr.webp" alt="A boy tries a virtual reality headset" loading="lazy"></button></div>
-        <div class="reveal" style="--d:0.06s"><button type="button" data-full="photos/kids-mats.webp" aria-label="View larger"><img src="photos/kids-mats.webp" alt="A room full of children playing together on the foam mats" loading="lazy"></button></div>
-        <div class="reveal" style="--d:0.12s"><video data-src="photos/play-4.mp4" poster="photos/play-4-poster.webp" muted loop playsinline preload="none" aria-label="Walking in past the trampoline to the play room"></video></div>
-        <div class="p-cta reveal" style="--d:.18s"><h3 data-i18n="pcT">Come and play</h3><p data-i18n="pcP">Open Tuesday to Sunday, 10 am to 5 pm. Free for every child.</p><a href="#visit" data-i18n="pcA">Plan your visit</a></div>
+        <div class="reveal" style="--d:0.06s"><video data-src="photos/play-3.mp4" poster="photos/play-3-poster.webp" muted loop playsinline preload="none" aria-label="Children choosing toys from the shelves"></video></div>
+        <div class="reveal" style="--d:0.12s"><button type="button" data-full="photos/kids-mats.webp" aria-label="View larger"><img src="photos/kids-mats.webp" alt="A room full of children playing together on the foam mats" loading="lazy"></button></div>
+        <div class="reveal" style="--d:0.18s"><video data-src="photos/play-4.mp4" poster="photos/play-4-poster.webp" muted loop playsinline preload="none" aria-label="Walking in past the trampoline to the play room"></video></div>
+        <div class="p-cta reveal" style="--d:0.24s"><h3 data-i18n="pcT">Come and play</h3><p data-i18n="pcP">Open Tuesday to Sunday, 10 am to 5 pm. Free for every child.</p><a href="#visit" data-i18n="pcA">Plan your visit</a></div>
       </div>
     </div>
   </section>
@@ -631,7 +630,7 @@ const HI={
  s3t:"बच्चे खेलने आते हैं",s3p:"बच्चे जवाहर नगर की लाइब्रेरी में आकर अपनी पसंद के खिलौनों से खेलते हैं।",
  s4t:"ख़ुशी आगे बढ़ती है",s4p:"खिलौने एक बच्चे से दूसरे तक जाते हैं, कुछ भी बेकार नहीं पड़ा रहता।",
  tLabel:"हमारी अलमारियों में",tTitle:"हर तरह के खेल के लिए कुछ न कुछ",tP:"देखिए चहक में बच्चों को क्या-क्या मिलता है। दान से नए खिलौने लगातार आते रहते हैं।",
- gLabel:"गैलरी",gTitle:"चहक के अंदर आइए",gP:"आसमानी दीवारें, खिलौनों से भरी अलमारियाँ, बॉल पिट, स्लाइड और झूला। किसी भी फ़ोटो को बड़ा देखने के लिए उस पर टैप करें।",vtag:"एक झलक",gcT:"और फ़ोटो Instagram पर",pT:"खेलते बच्चे",pP:"लाइब्रेरी के असली पल: मैट पर ट्रक, खिलौना रसोई, ट्रैम्पोलिन और पहली बार VR।",pcT:"आइए, खेलिए",pcP:"मंगलवार से रविवार, सुबह 10 से शाम 5 बजे तक खुला। हर बच्चे के लिए मुफ़्त।",pcA:"आने की योजना बनाएँ",
+ gLabel:"गैलरी",gTitle:"चहक के अंदर आइए",gP:"आसमानी दीवारें, खिलौनों से भरी अलमारियाँ, बॉल पिट, स्लाइड और झूला। किसी भी फ़ोटो को बड़ा देखने के लिए उस पर टैप करें।",vtag:"एक झलक",gcT:"और फ़ोटो Instagram पर",pT:"खेलते बच्चे",pP:"लाइब्रेरी के असली पल: मैट पर ट्रक, खिलौना रसोई, लकड़ी के ब्लॉक और पहली बार VR।",pcT:"आइए, खेलिए",pcP:"मंगलवार से रविवार, सुबह 10 से शाम 5 बजे तक खुला। हर बच्चे के लिए मुफ़्त।",pcA:"आने की योजना बनाएँ",
  iLabel:"जुड़िए",iTitle:"किसी बच्चे के खेल में मदद के तरीके",iP:"हर खिलौने, हर जश्न और हर मदद के साथ चहक आगे बढ़ता है।",
  i1t:"अपने पुराने खिलौने दान करें",i1p:"अच्छी हालत के खिलौने, और सभी हिस्सों वाले बोर्ड गेम व पहेलियाँ। आपके पुराने खिलौने किसी और बच्चे की सबसे बड़ी ख़ुशी बन सकते हैं।",i1b:"दान के लिए संपर्क करें",
  newTag:"नया",i2t:"चहक में जन्मदिन मनाइए",i2p:"अपने बच्चे का जन्मदिन लाइब्रेरी के बच्चों के साथ मनाइए। मिठाई या ट्रीट बाँटिए, साथ खेलिए, और इस दिन की याद में एक खिलौना दान कीजिए।",i2b:"जश्न बुक करें",
